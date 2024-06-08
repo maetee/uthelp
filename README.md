@@ -32,7 +32,9 @@ your-project/
 ├── uthelp/
 │   ├── script1.sh
 │   ├── script2.js
-│   └── readme.md
+│   └── DeployServer
+│       ├── readme.md
+│       └── deployProduction.sh
 ```
 
 ### Running the Tool
