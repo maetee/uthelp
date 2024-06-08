@@ -15,7 +15,7 @@
 Install the tool globally using npm:
 
 ```sh
-npm install -g uthelp
+npm install -g utility-help
 ```
 
 ## Usage
