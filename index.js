@@ -3,10 +3,62 @@
 const readline = require('readline');
 const { exec } = require('child_process');
 const fs = require('fs');
-const path = require('path');
+const path = require( 'path' );
 
-const rootDir = path.join(__dirname, 'uthelp');
+// Read the version from package.json
+const packageJson = require('./package.json');
+const version = packageJson.version;
+
+// Check for version flag
+if (process.argv.includes('-v') || process.argv.includes('--version')) {
+    console.log(`uthelp version ${version}`);
+    process.exit(0);
+}
+
+
+// Determine the root directory based on the executed script
+const scriptPath = process.argv[1]; // This gets the path of the executed script
+const scriptDir = path.dirname(scriptPath);
+// Use the current working directory and append 'uthelp'
+const rootDir = path.join(process.cwd(), 'uthelp');
 let currentDir = rootDir;
+
+if (!fs.existsSync(rootDir)) {
+    console.error("The 'uthelp' directory does not exist in the current path.");
+    console.log(`
+Please create a directory named 'uthelp' in your current working directory and place your scripts inside it.
+
+To create the directory and an example script, run the following commands:
+
+  mkdir uthelp
+  printf '#!/bin/bash\\n# This is an example script\\necho "Hello, world!"\\n' > uthelp/example-script.sh
+  chmod +x uthelp/example-script.sh
+
+Would you like to create the directory and example script automatically? (y/n)
+`);
+    
+    process.stdin.setEncoding('utf8');
+    process.stdin.once('data', (input) => {
+        const answer = input.trim().toLowerCase();
+        if (answer === 'y') {
+            exec('mkdir uthelp && printf \'#!/bin/bash\\n# This is an example script\\necho "Hello, world!"\\n\' > uthelp/example-script.sh && chmod +x uthelp/example-script.sh', (err, stdout, stderr) => {
+                if (err) {
+                    console.error(`Error creating directory and script: ${err.message}`);
+                    process.exit(1);
+                }
+                console.log('uthelp directory and example script created successfully.');
+                console.log('');
+                console.log('please run the command "uthelp" again to start the utility menu.');
+                process.exit(0);
+            });
+        } else {
+            process.exit(1);
+        }
+    });
+
+    return;
+}
+
 
 let menuItems = [];
 let selectedIndexStack = [0];
