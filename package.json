@@ -1,6 +1,6 @@
 {
   "name": "utility-help",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A command-line utility script navigation tool for browsing and executing utility scripts.",
   "main": "index.js",
   "bin": {
