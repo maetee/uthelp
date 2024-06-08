@@ -17,3 +17,28 @@ Install the tool globally using npm:
 ```sh
 npm install -g uthelp
 ```
+
+## Usage
+
+Run the tool with the following command:
+
+```sh
+uthelp
+```
+
+You will be presented with a navigable menu of your utility scripts. Use the arrow keys to navigate, Enter to select and execute a script, and Backspace to go back. Press ESC to exit the program with a confirmation prompt, or Control + C to exit immediately.
+
+## Screenshot
+
+```
+  Utilities
+
+ 👉   📦 1. Do Something (DoSomething)
+      🔧 2. Deploy Prisma (deployPrisma.sh)
+
+      🚪 [ Exit Program (ESC) ]
+
+    Description:
+      Test Descriptions
+    2nd line of descriptions
+```
