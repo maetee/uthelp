@@ -1,0 +1,24 @@
+{
+  "name": "uthelp",
+  "version": "1.0.0",
+  "description": "A command-line utility script navigation tool for browsing and executing utility scripts.",
+  "main": "index.js",
+  "bin": {
+    "uthelp": "index.js"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": ["utility", "scripts", "navigation", "cli", "command-line", "tool"],
+  "author": "Your Name",
+  "license": "ISC",
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maetee/uthelp.git"
+  },
+  "homepage": "https://github.com/maetee/uthelp#readme",
+  "bugs": {
+    "url": "https://github.com/maetee/uthelp/issues"
+  }
+}
