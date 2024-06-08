@@ -89,7 +89,11 @@ If you would like to contribute to this project, please follow these steps:
 
 This project is licensed under the ISC License. See the [LICENSE](LICENSE) file for more details.
 
-````
+## Source Code
+
+The source code for this project can be found at the following GitHub repository:
+
+[https://github.com/maetee/uthelp](https://github.com/maetee/uthelp)
 
 ### Notes
 
@@ -100,10 +104,4 @@ This project is licensed under the ISC License. See the [LICENSE](LICENSE) file 
 #!/bin/bash
 # This is a sample script that does something useful
 echo "Hello, world!"
-````
-
-## Source Code
-
-The source code for this project can be found at the following GitHub repository:
-
-[https://github.com/maetee/uthelp](https://github.com/maetee/uthelp)
+```
