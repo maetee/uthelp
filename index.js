@@ -340,7 +340,7 @@ function displayFooter() {
     // Get terminal dimensions
     const { columns, rows } = process.stdout;
 
-    const textPoweredBy = 'Powered by Maya Wizard co.,Ltd.';
+    const textPoweredBy = 'Powered by Maya Wizard ';
 
     // Move to bottom right position
     process.stdout.write(`\x1B[${rows};${columns - textPoweredBy.length }H${textPoweredBy}`);
