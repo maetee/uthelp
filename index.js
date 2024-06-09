@@ -3,7 +3,7 @@
 const readline = require('readline');
 const { exec } = require('child_process');
 const fs = require('fs');
-const path = require( 'path' );
+const path = require('path');
 
 // Read the version from package.json
 const packageJson = require('./package.json');
@@ -14,7 +14,6 @@ if (process.argv.includes('-v') || process.argv.includes('--version')) {
     console.log(`uthelp version ${version}`);
     process.exit(0);
 }
-
 
 // Determine the root directory based on the executed script
 const scriptPath = process.argv[1]; // This gets the path of the executed script
@@ -128,11 +127,27 @@ async function getFolderDescription(filePath) {
     }
 }
 
+function drawBorderedBox(text, startX, startY, width) {
+    const lines = text.split('\n');
+    const horizontalBorder = '─'.repeat(width - 2);
+    process.stdout.write(`\x1B[${startY};${startX}H┌${horizontalBorder}┐`);
+    lines.forEach((line, index) => {
+        const paddedLine = '  ' + line.padEnd(width - 4); // Add 2 spaces padding on the left
+        process.stdout.write(`\x1B[${startY + 1 + index};${startX}H│${paddedLine}│`);
+    });
+    process.stdout.write(`\x1B[${startY + 1 + lines.length};${startX}H└${horizontalBorder}┘`);
+}
+
 async function displayMenu() {
     console.clear();
     const breadcrumb = getBreadcrumb();
     console.log(`  ${breadcrumb}\n`);
+
+    let maxWidth = 0;
     menuItems.forEach((item, index) => {
+        if (item.length > maxWidth) {
+            maxWidth = item.length;
+        }
         if (index === selectedIndex) {
             if (item.startsWith('🔙')) {
                 console.log(` \x1B[32m${cursorIcon}   ${item}\x1B[0m\n`);
@@ -149,6 +164,8 @@ async function displayMenu() {
             console.log(`      ${item}`);
         }
     });
+
+    maxWidth += 10; // Add some padding
 
     let fileDescription = null;
     const selectedItem = menuItems[selectedIndex];
@@ -169,10 +186,13 @@ async function displayMenu() {
     }
 
     if (fileDescription) {
-        const textDesc = '\nDescription:\n\x1B[90m' + (fileDescription || 'No description available') + '\x1B[0m';
-        const textDescTab = textDesc.split('\n').map(line => `    ${line}`).join('\n');
-        console.log(textDescTab);
+        const textDesc = 'Description:\n' + (fileDescription || 'No description available');
+        const maxWidthDesc = Math.min(50, process.stdout.columns - maxWidth - 4);
+        const wrappedDesc = textDesc.match(new RegExp(`.{1,${maxWidthDesc}}`, 'g')).join('\n');
+        drawBorderedBox(wrappedDesc, maxWidth + 2, 2, maxWidthDesc + 4); // Adjusted width to accommodate padding
     }
+
+    displayFooter();
 }
 
 function displayMenuItemProcess(index) {
@@ -314,6 +334,14 @@ async function handleKeyPress(str, key) {
         process.exit();
     }
     displayMenu();
+}
+
+function displayFooter() {
+    // Get terminal dimensions
+    const { columns, rows } = process.stdout;
+
+    // Move to bottom right position
+    process.stdout.write(`\x1B[${rows};${columns - 14}HBy Maya Wizard`);
 }
 
 async function main() {
